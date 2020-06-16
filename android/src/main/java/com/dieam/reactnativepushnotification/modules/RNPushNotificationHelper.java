@@ -308,13 +308,17 @@ public class RNPushNotificationHelper {
                         visibility = NotificationCompat.VISIBILITY_PRIVATE;
                 }
             }
-
+            
+            // create pending intent for full screen intent
+            PendingIntent fullScreenIntent = toScheduleNotificationIntent(bundle);
+            
             NotificationCompat.Builder notification = new NotificationCompat.Builder(context, channel_id)
                     .setContentTitle(title)
                     .setTicker(bundle.getString("ticker"))
                     .setVisibility(visibility)
                     .setPriority(priority)
-                    .setAutoCancel(bundle.getBoolean("autoCancel", true));
+                    .setAutoCancel(bundle.getBoolean("autoCancel", true))
+                    .setFullScreenIntent(fullScreenIntent, true);
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // API 24 and higher
                 // Restore showing timestamp on Android 7+
